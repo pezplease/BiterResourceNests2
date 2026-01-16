@@ -181,36 +181,36 @@ generic_spawner_data = {
     damage_type = "physical",
     loot_name = nil,
     biter_data = {
-        health_multiplier = 1.4,
-        speed_multiplier = 0.85,
-        damage_multiplier = 1.25,
+        health_multiplier = .9,
+        speed_multiplier = 1,
+        damage_multiplier = 1,
     },
     unit_types = biter_list,
     spawner_data = {
-        max_health = 4500,
-        spawning_cooldown = { 4, 6 },
-        max_units = 50,
+        --max_health = 350,
+        --spawning_cooldown = { 4, 6 },
+        --max_units = 50,
         corpse = "big-explosion",
-        nest_attack = "boulder",
+        --nest_attack = "boulder",
     },
     resistance_data =
     {
         physdec = 0,
-        physperc = 50,
+        physperc = 10,
         expdec = 0,
-        expperc = 40,
+        expperc = 10,
         aciddec = 0,
-        acidperc = 50,
+        acidperc = 10,
         firedec = 0,
-        fireperc = 40,
+        fireperc = 10,
         laserdec = 0,
-        laserperc = 40,
+        laserperc = 10,
         elecdec = 0,
-        elecperc = 40,
+        elecperc = 10,
         poisdec = 0,
-        poisperc = 92,
+        poisperc = 10,
         impdec = 0,
-        impperc = 40
+        impperc = 10
     }
 }
 function create_biter_template(overrides)
@@ -247,11 +247,12 @@ resource_list = {
             damage_type = "physical",
             loot_name = "iron-ore",
             name = "iron-ore",
-            biter_data = { health_multiplier = 1.8, speed_multiplier = 0.7 },
+            biter_data = { health_multiplier = 1.1, speed_multiplier = 0.65 },
             color_data = { r = 0.45, g = 0.6, b = 0.9, a = 1 },
             resistance_data =
             {
-            physdec = 4
+            physperc = 20,
+            physdec = -5,
             },
         }),
 
@@ -264,8 +265,8 @@ resource_list = {
         unit_types = spitter_list,
         color_data = { r = 0.803, g = 0.388, b = 0.215, a = 1 },
         resistance_data = {
-            acidperc = 90,
-            poisperc = 98,
+            acidperc = 70,
+            poisperc = 90,
         },
         spawner_data = {
             nest_attack = "both",
@@ -281,14 +282,14 @@ resource_list = {
         unit_types = spitter_list,
         color_data = { r = 0.2, g = 0.2, b = 0.2, a = 1 },
         biter_overrides = {
-            health_multiplier = 2,
+            health_multiplier = 1.2,
             speed_multiplier = .55,
-            damage_multiplier = 3,
+            damage_multiplier = 2,
         },
          resistance_data = {
              impperc = 20,
-             expperc = 20,
-             fireperc = 10,
+             expperc = -20,
+             fireperc = -35,
              poisperc = 85,
          }
     }),
@@ -296,14 +297,14 @@ resource_list = {
         name = "stone",
         damage_type = "physical",
         loot_name = "stone",
-        spawner_data = {
-            max_health = 3300},
+        --spawner_data = {
+            --max_health = 3300},
 
         color_data = { r = 0.99, g = 0.99, b = 0.99, a = 1 },
         biter_data = {
-            health_multiplier = 4.5,
+            health_multiplier = 1.45,
             speed_multiplier = 0.25,
-            damage_multiplier = 2.5
+            damage_multiplier = 2
         },
         resistance_data = {
             impperc = -40,
@@ -311,7 +312,8 @@ resource_list = {
             elecperc = 70,
             laserperc = 70,
             poisperc = 98,
-            physperc = 55,
+            physperc = 35,
+            fireperc = 25,
         }
     }),
     ["uranium-ore"] = create_biter_template({
@@ -320,19 +322,20 @@ resource_list = {
         loot_name = "uranium-ore",
         color_data = { r = 0.25, g = 0.91, b = 0.25, a = 1 },
         biter_data = {
-            health_multiplier = 6,
-            speed_multiplier = 1.35,
-            damage_multiplier = 5
+            health_multiplier = 1.6,
+            speed_multiplier = 1,
+            damage_multiplier = 2
         },
         unit_types = spitter_list,
         resistance_data = {
-            physdec = 9,
-            physperc = 40,
+            physdec = 5,
+            physperc = 20,
             elecperc = 15,
             acidperc = 99,
             poisperc = 99,
             impperc = 15,
-            expperc = 5,
+            expperc = -40,
+            expdec = -10,
         },
         spawner_data = {
             nest_attack = "both",
@@ -342,22 +345,23 @@ resource_list = {
     ["crude-oil"] = create_biter_template({
         name = "crude-oil",
         damage_type = "fire",
-        spawner_data = {
-            max_health = 3000,
-            spawning_cooldown = {15,20},
-            nest_attack = "spitter",
-        },
+        --awner_data = {
+        --    max_health = 3000,
+        --    spawning_cooldown = {15,20},
+        --    nest_attack = "spitter",
+        --},
         unit_types = spitter_list,
         biter_data = {
-            health_multiplier = 1.3,
+            health_multiplier = 0.65,
             speed_multiplier = 1.65,
             damage_multiplier = 0.75,
         },
         color_data = { r = 0.89, g = 0.349, b = 0.588, a = 1 },
         resistance_data = {
-            fireperc = -45,
-            expperc = -25,
+            fireperc = -85,
+            expperc = -35,
             poisperc = 85,
+            physperc = 20,
         }
     })
 }

@@ -3,7 +3,7 @@ require "prototypes.resource-biters"
 require "prototypes.nest-attack-data"
 
 --[[ add_res_list_to_table("jello", { name = "jello", unit_types = biter_list}) for the life of me i cant figure out why this fails]]
-setup_nest_attacks(resource_list)
+--setup_nest_attacks(resource_list)
 
 setup_biter_corpses(resource_list)
 --setup_resource_nest_corpse(resource_list)

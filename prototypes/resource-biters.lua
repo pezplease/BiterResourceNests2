@@ -149,16 +149,16 @@ function setup_resource_biters(resource_list)
       local biter = table.deepcopy(data.raw["unit"][biter_name])
 
       biter.corpse = resource_name.name .. "-" .. biter_name .. "-corpse"
-      biter.max_health = biter.max_health * health_multiplier * settings.startup["resource-nests-biter-health-multiplier"].value
+      biter.max_health = biter.max_health * health_multiplier * settings.startup["resource-biters-biter-health-multiplier"].value
 
       biter.name = biter_res_name .. "-" .. biter_name
       biter.order = "y-" .. biter_res_name .. "-y" .. biter_name
-      if settings.startup["resource-nests-add-resource-to-drop-table"].value == true then
+      if settings.startup["resource-biters-add-resource-to-drop-table"].value == true then
         if resource_name.loot_name then
           
-        local loot_count = (biter.max_health / 22) * settings.startup["resource-nests-resource-drop-amount"].value
-        if loot_count > (settings.startup["resource-nests-resource-drop-amount"].value * 25) then
-          loot_count = settings.startup["resource-nests-resource-drop-amount"].value * 25
+        local loot_count = (biter.max_health / 22) * settings.startup["resource-biters-resource-drop-amount"].value
+        if loot_count > (settings.startup["resource-biters-resource-drop-amount"].value * 25) then
+          loot_count = settings.startup["resource-biters-resource-drop-amount"].value * 25
         end
               biter.loot = {{
                 
@@ -166,7 +166,7 @@ function setup_resource_biters(resource_list)
         count_min = loot_count,
         
         item = resource_name.loot_name,
-        probability = settings.startup["resource-nests-resource-drop-rate"].value
+        probability = settings.startup["resource-biters-resource-drop-rate"].value
       }}
         end
      end
@@ -250,16 +250,6 @@ local default_inactive_nest_cooldown = {999999,999999}
 local default_inactive_max_count_of_owned_units = 0
 local default_inactive_max_count_defensive_units = 0
 
-
-if settings.startup["resource-nests-dormant-biter-spawn"].value > 0 then
---default inactive values
-default_inactive_nest_cooldown = {200,900} 
---{ 999999, 999999 }
-default_inactive_max_count_of_owned_units = settings.startup["resource-nests-dormant-biter-spawn"].value
-default_inactive_max_count_defensive_units = 0
- end
-
-
 function set_unit_spawners(resource_name)
   local result_units = specilized_biter_results(resource_name)
   if resource_name.unit_types == spitter_list then
@@ -286,12 +276,12 @@ function setup_resource_nests(resource_list)
     local inactive_spawner = table.deepcopy(generic_spawner)
     inactive_spawner.name = "inactive-biter-spawner-" .. resource_name.name
     --inactive_spawner.is_military_target = false
-    inactive_spawner.hidden_in_factoriopedia = false
+    --inactive_spawner.hidden_in_factoriopedia = false
     inactive_spawner.max_health = resource_name.spawner_data.max_health
     inactive_spawner.healing_per_tick = 100
     inactive_spawner.max_count_of_owned_units = default_inactive_max_count_of_owned_units
     inactive_spawner.spawning_cooldown = default_inactive_nest_cooldown
-    inactive_spawner.max_count_of_owned_defensive_units = default_inactive_max_count_defensive_units
+    --inactive_spawner.max_count_of_owned_defensive_units = default_inactive_max_count_defensive_units
     inactive_spawner.resistances = create_resistance_table(r.physdec, r.physperc, r.expdec, r.expperc, r.aciddec,
       r.acidperc, r.firedec, r.fireperc, r.laserdec,
       r.laserperc, r.elecdec, r.elecperc, r.poisdec, r.poisperc, r.impdec, r.impperc)
@@ -304,8 +294,8 @@ function setup_resource_nests(resource_list)
     active_spawner.name = "active-biter-spawner-" .. resource_name.name
     active_spawner.hidden_in_factoriopedia = false
     active_spawner.max_health = resource_name.spawner_data.max_health
-    active_spawner.spawning_cooldown = resource_name.spawner_data.spawning_cooldown
-    active_spawner.max_count_of_owned_units = resource_name.spawner_data.max_units
+    --active_spawner.spawning_cooldown = resource_name.spawner_data.spawning_cooldown
+    --active_spawner.max_count_of_owned_units = resource_name.spawner_data.max_units
     active_spawner.resistances = create_resistance_table(r.physdec, r.physperc, r.expdec, r.expperc, r.aciddec,
       r.acidperc, r.firedec, r.fireperc, r.laserdec,
       r.laserperc, r.elecdec, r.elecperc, r.poisdec, r.poisperc, r.impdec, r.impperc)
@@ -369,7 +359,7 @@ function setup_resource_nests(resource_list)
 
 
 
-    table.insert(resourcespawners, inactive_spawner)
+    --table.insert(resourcespawners, inactive_spawner)
     table.insert(resourcespawners, active_spawner)
   end
   data:extend(resourcespawners)

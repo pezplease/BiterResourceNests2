@@ -9,5 +9,9 @@
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
-    ]
+    ],
+    "Lua.workspace.userThirdParty": [
+        "c:\\Users\\tatma\\AppData\\Roaming\\Code\\User\\workspaceStorage\\20e1fa9cf747fb74d9b13c26c5dcf8f2\\justarandomgeek.factoriomod-debug\\sumneko-3rd"
+    ],
+    "Lua.workspace.checkThirdParty": "ApplyInMemory"
 }

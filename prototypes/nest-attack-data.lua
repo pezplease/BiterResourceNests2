@@ -1,5 +1,5 @@
 require "prototypes.biter-data"
-
+--Currently unused, but kept for possible future use
 local function create_boulder_impact(resource)
     local boulder_impact = {
         type = "explosion",
