@@ -186,7 +186,7 @@ function setup_resource_biters(resource_list)
           biter.attack_parameters.ammo_type.action.action_delivery.target_effects = {
             {
               type = "damage",
-              damage = { amount = new_damage, type = "physical" } -- Change damage type if needed
+              damage = { amount = new_damage, type = resource_name.damage_type } -- Change damage type if needed
             }
           }
         end
@@ -274,36 +274,33 @@ function setup_resource_nests(resource_list)
     local r = resource_name.resistance_data
     --local units = set_unit_spawners(resource_name)
     local inactive_spawner = table.deepcopy(generic_spawner)
-    inactive_spawner.name = "inactive-biter-spawner-" .. resource_name.name
-    --inactive_spawner.is_military_target = false
-    --inactive_spawner.hidden_in_factoriopedia = false
-    inactive_spawner.max_health = resource_name.spawner_data.max_health
-    inactive_spawner.healing_per_tick = 100
-    inactive_spawner.max_count_of_owned_units = default_inactive_max_count_of_owned_units
-    inactive_spawner.spawning_cooldown = default_inactive_nest_cooldown
-    --inactive_spawner.max_count_of_owned_defensive_units = default_inactive_max_count_defensive_units
-    inactive_spawner.resistances = create_resistance_table(r.physdec, r.physperc, r.expdec, r.expperc, r.aciddec,
-      r.acidperc, r.firedec, r.fireperc, r.laserdec,
-      r.laserperc, r.elecdec, r.elecperc, r.poisdec, r.poisperc, r.impdec, r.impperc)
-    inactive_spawner.result_units = set_unit_spawners(resource_name.name)
-    inactive_spawner.order = "y-" .. resource_name.name .. "-zc"
-    inactive_spawner.autoplace = nil
-    --inactive_spawner.corpse = resource_name.name .. "-biter-spawner-corpse"
-    inactive_spawner.corpse = resource_name.spawner_data.corpse
     local active_spawner = table.deepcopy(generic_spawner)
     active_spawner.name = "active-biter-spawner-" .. resource_name.name
     active_spawner.hidden_in_factoriopedia = false
-    active_spawner.max_health = resource_name.spawner_data.max_health
-    --active_spawner.spawning_cooldown = resource_name.spawner_data.spawning_cooldown
-    --active_spawner.max_count_of_owned_units = resource_name.spawner_data.max_units
+    --active_spawner.max_health = resource_name.spawner_data.max_health
     active_spawner.resistances = create_resistance_table(r.physdec, r.physperc, r.expdec, r.expperc, r.aciddec,
       r.acidperc, r.firedec, r.fireperc, r.laserdec,
       r.laserperc, r.elecdec, r.elecperc, r.poisdec, r.poisperc, r.impdec, r.impperc)
+
     active_spawner.result_units = set_unit_spawners(resource_name.name)
     active_spawner.order = "y-" .. resource_name.name .. "-zb"
-    --active_spawner.corpse = resource_name.name .. "-biter-spawner-corpse"
+
     active_spawner.corpse = resource_name.spawner_data.corpse
-    active_spawner.autoplace = nil
+
+    -- Set up autoplace on the corresponding ore's noise layer (skip generic)
+    if resource_name.name ~= "generic" then
+      local ore_name = resource_name.name
+      local control_name = "active-biter-spawner-" .. resource_name.name
+      active_spawner.autoplace = {
+        control = ore_name,
+        order = "b[enemy]-b[biter-spawner]-" .. resource_name.name,
+        force = "enemy",
+        probability_expression = "(var(\"control:" .. control_name .. ":size\") > 0) * (0.005 * var(\"entity:" .. ore_name .. ":probability\"))",
+        
+      }
+    else
+      active_spawner.autoplace = nil
+    end
     
     --override default resource settings
     -- Set the tint for the spawner
@@ -312,13 +309,6 @@ function setup_resource_nests(resource_list)
           {
             icon = active_spawner.icon,
             icon_size = active_spawner.icon_size,
-            tint = resource_colors
-          },
-        }
-        inactive_spawner.icons = {
-          {
-            icon = inactive_spawner.icon,
-            icon_size = inactive_spawner.icon_size,
             tint = resource_colors
           },
         }
@@ -335,30 +325,8 @@ function setup_resource_nests(resource_list)
             end
           end
         else
-          log("Warning: inactive_spawner.graphics_set.animations is nil. Unable to apply tint.") -- Debug message
+          log("Warning: active_spawner.graphics_set.animations is nil. Unable to apply tint.") -- Debug message
         end
-
-    if inactive_spawner.graphics_set and inactive_spawner.graphics_set.animations then
-      for _, animation in pairs(inactive_spawner.graphics_set.animations) do
-        if animation.layers then
-          for _, layer in pairs(animation.layers) do
-            if layer then
-              layer.tint = resource_colors
-
-            end
-          end
-        else
-          animation.tint = resource_colors
-
-        end
-      end
-    else
-      log("Warning: inactive_spawner.graphics_set.animations is nil. Unable to apply tint.") -- Debug message
-    end
-
-
-
-
     --table.insert(resourcespawners, inactive_spawner)
     table.insert(resourcespawners, active_spawner)
   end
