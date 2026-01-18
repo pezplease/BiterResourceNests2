@@ -38,4 +38,11 @@ data:extend({
 		minimum_value = 0.01,
 		maximum_value = 15,
 	},
+	{
+		type = "bool-setting",
+		name = mod_name .. "disable-expansion",
+		order = "b1",
+		setting_type = "runtime-global",
+		default_value = false,
+	},
 })
