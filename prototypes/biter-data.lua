@@ -17,8 +17,8 @@ function specilized_biter_results(resource_type)
             resource_type .. "-" .. "medium-biter",
             {
                 {
-                    .35,
-                    .1
+                    .2,
+                    0
                 },
                 {
                     0.6,
@@ -70,7 +70,7 @@ function specilized_spitter_results(resource_type)
                     0.3
                 },
                 {
-                    0.35,
+                    0.6,
                     0
                 }
             }
