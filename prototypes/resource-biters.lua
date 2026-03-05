@@ -292,30 +292,27 @@ function setup_resource_nests(resource_list)
       local ore_name = resource_name.name
       local control_name = "active-biter-spawner-" .. resource_name.name
       local probability_expr
+      local richness_expr
 
       -- Starting area safe zone check: (distance > starting_area_radius) returns 1 outside, 0 inside
       local safe_zone = "(distance > var(\"starting_area_radius\") * 1.5)"
 
-      -- Map ore names to their default noise expression names
-      -- Using the default-*-patches noise expressions directly is more compatible with RSO
-      -- because RSO only modifies resource prototype autoplace, not the core noise expressions
-      local patches_expr_name
+      -- crude oil uses crude-oil-patches instead
       if ore_name == "crude-oil" then
-        patches_expr_name = "default-crude-oil-patches"
+        probability_expr =
+  safe_zone ..
+  " * var(\"control:" .. control_name .. ":frequency\")" ..
+  " * (0.001 * clamp(var(\"default-crude-oil-patches\"), 0, 1))" ..
+  " * (var(\"control:" .. control_name .. ":size\") ^ 2)"
+        --probability_expr = safe_zone .. " * (var(\"control:" .. control_name .. ":size\") > 0) * (0.001 * clamp(var(\"default-crude-oil-patches\"), 0, 1))"
+        --richness_expr = "(var(\"control:" .. control_name .. ":size\") > 0) * var(\"control:" .. control_name .. ":richness\") * var(\"default-crude-oil-patches\")"
       else
-        patches_expr_name = "default-" .. ore_name
+         probability_expr =
+  safe_zone ..
+  " * var(\"control:" .. control_name .. ":frequency\")" ..
+  " * (0.002 * var(\"entity:" .. ore_name .. ":probability\"))" ..
+  " * (var(\"control:" .. control_name .. ":size\") ^ 2)"
       end
-
-      -- Build probability expression:
-      -- 1. safe_zone: prevents spawning in starting area
-      -- 2. frequency control: player map gen slider
-      -- 3. patches expression: ties spawning to where ores would generate (works with RSO)
-      -- 4. size control: player map gen slider (squared for more dramatic effect)
-      probability_expr =
-        safe_zone ..
-        " * var(\"control:" .. control_name .. ":frequency\")" ..
-        " * (0.002 * clamp(var(\"" .. patches_expr_name .. "\"), 0, 1))" ..
-        " * (var(\"control:" .. control_name .. ":size\") ^ 2)"
 
       active_spawner.autoplace = {
         control = control_name,
