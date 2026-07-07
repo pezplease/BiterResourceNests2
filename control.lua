@@ -55,6 +55,12 @@ script.on_event(defines.events.on_biter_base_built, function(event)
     end
   end
 
+  -- If vanilla biters are disabled, fall back to a generic resource nest instead
+  -- of leaving the vanilla nest that expansion just built
+  if not best_nest_type and settings.startup["resource-biters-disable-vanilla-biters"].value then
+    best_nest_type = "active-biter-spawner-iron-ore"
+  end
+
   -- If we found resource biters nearby, replace the nest with the appropriate type
   if best_nest_type then
     local surface = entity.surface
