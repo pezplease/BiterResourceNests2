@@ -1,5 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2026-7-7
+  Info:
+    - Fixed error where worm turrets would spawn when 'disable vanilla biters' is turned on.
+    - buffed resource nest spawn rates.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date: 2026-1-16
+Date: 2026-7-6
   Info:
     - Released the initial version.

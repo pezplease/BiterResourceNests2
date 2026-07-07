@@ -2,13 +2,25 @@ require "prototypes.biter-data"
 require "prototypes.resource-biters"
 require "prototypes.nest-attack-data"
 
--- Prevent vanilla biters/spitters and their nests from being placed during map generation
+-- Prevent vanilla biters/spitters/worms and their nests from being placed during map generation
 if settings.startup["resource-biters-disable-vanilla-biters"].value then
   if data.raw["unit-spawner"]["biter-spawner"] then
     data.raw["unit-spawner"]["biter-spawner"].autoplace = nil
   end
   if data.raw["unit-spawner"]["spitter-spawner"] then
     data.raw["unit-spawner"]["spitter-spawner"].autoplace = nil
+  end
+
+  local worm_names = {
+    "small-worm-turret",
+    "medium-worm-turret",
+    "big-worm-turret",
+    "behemoth-worm-turret",
+  }
+  for _, worm_name in pairs(worm_names) do
+    if data.raw["turret"][worm_name] then
+      data.raw["turret"][worm_name].autoplace = nil
+    end
   end
 end
 
@@ -38,7 +50,9 @@ if data.raw["planet"]["nauvis"] then
   if nauvis.map_gen_settings then
     nauvis.map_gen_settings.autoplace_controls = nauvis.map_gen_settings.autoplace_controls or {}
     for _, control_name in pairs(control_names) do
-      nauvis.map_gen_settings.autoplace_controls[control_name] = {}
+      -- frequency multiplies directly into the probability expression below,
+      -- so bumping the default here makes nests ~40% more common out of the box
+      nauvis.map_gen_settings.autoplace_controls[control_name] = { frequency = 4 }
     end
   end
 end
