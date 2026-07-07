@@ -45,4 +45,11 @@ data:extend({
 		setting_type = "runtime-global",
 		default_value = false,
 	},
+	{
+		type = "bool-setting",
+		name = mod_name .. "disable-vanilla-biters",
+		order = "b2",
+		setting_type = "startup",
+		default_value = false,
+	},
 })

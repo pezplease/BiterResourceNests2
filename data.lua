@@ -2,6 +2,16 @@ require "prototypes.biter-data"
 require "prototypes.resource-biters"
 require "prototypes.nest-attack-data"
 
+-- Prevent vanilla biters/spitters and their nests from being placed during map generation
+if settings.startup["resource-biters-disable-vanilla-biters"].value then
+  if data.raw["unit-spawner"]["biter-spawner"] then
+    data.raw["unit-spawner"]["biter-spawner"].autoplace = nil
+  end
+  if data.raw["unit-spawner"]["spitter-spawner"] then
+    data.raw["unit-spawner"]["spitter-spawner"].autoplace = nil
+  end
+end
+
 -- Create autoplace controls for each resource biter nest
 local autoplace_controls = {}
 local control_names = {}
