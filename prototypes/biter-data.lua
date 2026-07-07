@@ -251,8 +251,8 @@ resource_list = {
             color_data = { r = 0.45, g = 0.6, b = 0.9, a = 1 },
             resistance_data =
             {
-            physperc = 20,
-            physdec = -5,
+            physperc = 25,
+            physdec = -8,
             },
         }),
 
@@ -265,8 +265,11 @@ resource_list = {
         unit_types = spitter_list,
         color_data = { r = 0.803, g = 0.388, b = 0.215, a = 1 },
         resistance_data = {
-            acidperc = 70,
-            poisperc = 90,
+            acidperc = 50,
+            poisperc = 70,
+            elecperc = -60,
+            laserperc = -60,
+            fireperc = -10,
         },
         spawner_data = {
             nest_attack = "both",
@@ -284,13 +287,13 @@ resource_list = {
         biter_overrides = {
             health_multiplier = 1.2,
             speed_multiplier = .55,
-            damage_multiplier = 2,
+            damage_multiplier = 1.25,
         },
          resistance_data = {
              impperc = 20,
              expperc = -20,
              fireperc = -35,
-             poisperc = 85,
+             poisperc = 65,
          }
     }),
     ["stone"] = create_biter_template({
@@ -302,18 +305,19 @@ resource_list = {
 
         color_data = { r = 0.99, g = 0.99, b = 0.99, a = 1 },
         biter_data = {
-            health_multiplier = 1.45,
-            speed_multiplier = 0.25,
-            damage_multiplier = 2
+            health_multiplier = 1.65,
+            speed_multiplier = 0.2,
+            damage_multiplier = 1.35
         },
         resistance_data = {
             impperc = -40,
             expperc = -50,
-            elecperc = 70,
-            laserperc = 70,
-            poisperc = 98,
-            physperc = 35,
-            fireperc = 25,
+            expdec = -50,
+            elecperc = 60,
+            laserperc = 60,
+            poisperc = 65,
+            physperc = 25,
+            fireperc = 40,
         }
     }),
     ["uranium-ore"] = create_biter_template({
@@ -322,18 +326,18 @@ resource_list = {
         loot_name = "uranium-ore",
         color_data = { r = 0.25, g = 0.91, b = 0.25, a = 1 },
         biter_data = {
-            health_multiplier = 1.6,
-            speed_multiplier = 1,
-            damage_multiplier = 2
+            health_multiplier = 1.25,
+            speed_multiplier = 1.15,
+            damage_multiplier = 1.65
         },
         unit_types = spitter_list,
         resistance_data = {
             physdec = 5,
             physperc = 20,
             elecperc = 15,
-            acidperc = 99,
-            poisperc = 99,
-            impperc = 15,
+            acidperc = 50,
+            poisperc = 50,
+            impperc = 25,
             expperc = -40,
             expdec = -10,
         },
